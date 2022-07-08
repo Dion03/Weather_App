@@ -15,7 +15,7 @@
               </v-card-title>
               <!--  Temp -->
               <v-card class="Card ">
-                <v-img alt="icon" :aspect-ratio="16/9" contain max-width="700" v-bind:src="this.weatherIcon+'.svg'"></v-img>
+                <v-img alt="icon" :aspect-ratio="16/9" contain max-width="700" v-bind:src="'../icons/'+this.weatherIcon+'.svg'"></v-img>
                 <v-card-title class="mt-10 cardTitle" style="font-size: 64px !important; margin-bottom: -1rem;">
                   {{this.temp}}
                 </v-card-title><br/>
@@ -34,7 +34,7 @@
           <!-- 2nd col -->
           <v-col cols="12" sm="12" md="9">
             <v-container  style="background-color: #222B3A;height: 100vh; overflow-y: scroll;" >
-                <TodaysForcast :todaysForcast="this.todaysForcast"></TodaysForcast>
+                <TodaysForcast :todaysForcast="this.todaysForcast" :weatherForcastTime="this.weatherForcastTime"></TodaysForcast>
                 <WeatherHighlights :weatherInfo="this.weather"></WeatherHighlights>
                 <WeekForcast :weekForcast="this.forcastWeather"></WeekForcast>
 
@@ -64,6 +64,8 @@ import axios from "axios";
 
       forcastWeather: [],
       todaysForcast: [],
+            weatherForcastTime: [],
+
       time: '',
     }),
     methods:{
@@ -89,13 +91,29 @@ import axios from "axios";
       getWeeklyForcast(coords){
         // console.log("Dit coords",coords.lat)
         axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=' + coords.lat + '&lon=' + coords.lon + '&exclude=minutely&units=metric&lang=nl&appid=1482f10b395eba6d7f743494cbc50429').then(response => {
-          var weatherArray = Object.values(response.data.hourly);
-          weatherArray.forEach(element => {
-            if(moment().format('YYYY-MM-DD') == moment.unix(element.dt).format('YYYY-MM-DD')){
-              this.todaysForcast.push(element);
-            }
+          var weatherHourlyArray = Object.values(response.data.hourly);
+          weatherHourlyArray.forEach(element => {
+            this.todaysForcast.push(element);
+            this.weatherForcastTime.push(moment.unix(element.dt).format('dddd, HH:mm'))
           })
+
+
+
+          var weatherDailyArray = Object.values(response.data.daily);
+          weatherDailyArray.forEach(element => {
+            this.forcastWeather.push(element);
+          })
+
+            console.log("dagelijkse dingen",this.forcastWeather)
+
+
+
+
+
+
+
         })
+        
       },
       getTime(){
         this.time = moment().format("dddd HH:mm");
@@ -106,35 +124,11 @@ import axios from "axios";
       this.getWeather()
     },
   created() {
-    this.time = moment().format("dddd, HH:mm");
+    this.time = moment().format("ddd, HH:mm");
     setInterval(() => this.getTime(), 1 * 1000);
   }
   }
 </script>
-<style scoped>
-* {
-    font-family: "Roboto" !important; 
-    color: white !important;
-    margin: 0 !important;
-  }
-  html{
-        overflow: hidden !important;
+<style scoped src="@/assets/css/style.css"></style>
 
-  }
-  .Card{
-    justify-content: center !important;
-    text-align: center !important;
-    background-color: #18212D !important;
-    border-radius: 2em !important;
-  }
-  .leftCard{
-    border-radius: 0px !important 
-  }
-  .cardTitle{
-    justify-content: center !important;
-  }
-  .cardText{
-    font-size:large;
-  }
-</style>
 

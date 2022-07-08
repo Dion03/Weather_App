@@ -20,29 +20,4 @@ export default {
   }
 };
 </script>
-<style scoped>
-* {
-    font-family: "Roboto" !important; 
-    color: white !important;
-    margin: 0 !important;
-  }
-  .Card{
-    justify-content: center !important;
-    text-align: center !important;
-    background-color: #18212D !important;
-    border-radius: 2em !important;
-  }
-  .leftCard{
-    border-radius: 0px !important 
-  }
-  .cardTitle{
-    justify-content: center !important;
-  }
-  .cardText{
-    font-size:large;
-  }
-    .img{
-  left: 50%;
-  transform: translate( -50%);
-  }
-</style>
+<style scoped src="@/assets/css/style.css"></style>

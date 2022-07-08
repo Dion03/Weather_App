@@ -1,0 +1,31 @@
+* {
+    font-family: "Roboto" !important; 
+    color: white !important;
+    margin: 0 !important;
+  }
+  .Card{
+    justify-content: center !important;
+    text-align: center !important;
+    background-color: #18212D !important;
+    border-radius: 2em !important;
+  }
+  .leftCard{
+    border-radius: 0px !important 
+  }
+  .cardTitle{
+    justify-content: center !important;
+  }
+  .cardText{
+    font-size:large;
+  }
+  .img{
+    left: 50%;
+    transform: translate( -50%);
+  }
+  .mainText{
+    font-size: 1.6em;
+  }
+  .subText{
+    color: #7E7F7E !important; 
+    font-size: 1.3em;
+  }
