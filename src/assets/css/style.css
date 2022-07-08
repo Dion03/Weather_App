@@ -29,3 +29,13 @@
     color: #7E7F7E !important; 
     font-size: 1.3em;
   }
+
+  .dailyTempText{
+    font-size: 1.3em;
+
+  }
+  .dailyTempSubText{
+    color: #7E7F7E !important; 
+    font-size: 1.3em;
+    margin-left: 1.5rem !important;
+  }
