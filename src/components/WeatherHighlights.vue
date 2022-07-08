@@ -42,6 +42,7 @@ export default {
     return {
     };
   },
+  
 };
 </script>
 <style scoped src="@/assets/css/style.css"></style>

@@ -36,7 +36,7 @@
             <v-container  style="background-color: #222B3A;height: 100vh; overflow-y: scroll;" >
                 <TodaysForcast :todaysForcast="this.todaysForcast" :weatherForcastTime="this.weatherForcastTime"></TodaysForcast>
                 <WeatherHighlights :weatherInfo="this.weather"></WeatherHighlights>
-                <WeekForcast :weekForcast="this.forcastWeather"></WeekForcast>
+                <WeekForcast :weekForcast="this.forcastWeather" :weeklyWeatherForcastTime="this.weeklyWeatherForcastTime"></WeekForcast>
 
 
             </v-container>
@@ -65,7 +65,7 @@ import axios from "axios";
       forcastWeather: [],
       todaysForcast: [],
             weatherForcastTime: [],
-
+weeklyWeatherForcastTime: [],
       time: '',
     }),
     methods:{
@@ -85,6 +85,7 @@ import axios from "axios";
         })
         .finally(() => {
           this.todaysForcast = [],
+          this.forcastWeather = []
           this.getWeeklyForcast(this.weather.coord)
         })
       },
@@ -102,9 +103,11 @@ import axios from "axios";
           var weatherDailyArray = Object.values(response.data.daily);
           weatherDailyArray.forEach(element => {
             this.forcastWeather.push(element);
-          })
+                        this.weeklyWeatherForcastTime.push(moment.unix(element.dt).format('dddd'))
 
-            console.log("dagelijkse dingen",this.forcastWeather)
+          })
+            console.log("dagelijkse dingen",this.weeklyWeatherForcastTime)
+
 
 
 
