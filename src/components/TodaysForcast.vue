@@ -2,10 +2,10 @@
     <v-container>
         <h1>Het weer van vandaag</h1>
               <v-row >
-                <v-col v-for="item in todaysForcast" :key="item.id">
+                <v-col v-for="(item) in todaysForcast" :key="item.id">
                   <v-card class="Card forcastCard" >
-                    <v-card-title class="cardTitle">{{item.dt}}</v-card-title>
-                    <v-img alt="icon" :aspect-ratio="16/9" contain v-bind:src="item.weather[0].icon+'.svg'"></v-img>
+                    <v-card-title class="cardTitle">{{item.dt_txt.split(" ").slice(1)[0]}}</v-card-title>
+                    <v-img alt="icon" :aspect-ratio="16/9" contain width="250px" class="img" v-bind:src="item.weather[0].icon+'.svg'"></v-img>
                     <v-card-text class="cardText">
                       <p>{{Math.round(item.main.temp)}}</p>
                       <p>{{item.weather[0].description}}</p>
@@ -17,44 +17,16 @@
     </v-container>
 </template>
 <script>
-import axios from 'axios';
-import moment from 'moment'
+// import axios from 'axios';
+
 export default {
-  props:['city'],
+  props:['todaysForcast'],
   name: "WeatherHighlights",
   data() {
     return {
-        forcastWeather: '',
-        todaysForcast: []
+
     };
   },
-  methods:{
-  getWeatherForcast() {
-        axios.get('https://api.openweathermap.org/data/2.5/forecast?q='+ this.city +'&units=metric&APPID=1482f10b395eba6d7f743494cbc50429').then(response => {
-          this.forcastWeather = response.data;
-          console.log("Future weather",response.data);
-          var weatherArray = Object.values(response.data.list);
-          weatherArray.forEach(element => {
-            if(moment().format('YYYY-MM-DD') == moment(element.dt_txt).format('YYYY-MM-DD')){
-              this.todaysForcast.push(element);
-              console.log("Weer nu",element);
-            }
-          });
-        })
-      },
-  },
-  mounted(){
-    this.getWeatherForcast()
-    console.log("Wordt mee gestuurd",this.weatherInfo)
-    console.log("Weer vandaag",this.todaysForcast)
-  },
-  watch:{
-    city(){
-        this.todaysForcast = []
-        this.getWeatherForcast()
-    }
-  }
-
 };
 </script>
 <style scoped>
@@ -77,6 +49,10 @@ export default {
   }
   .cardText{
     font-size:large;
+  }
+  .img{
+  left: 50%;
+  transform: translate( -50%);
   }
 
 </style>

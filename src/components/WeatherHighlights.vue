@@ -5,28 +5,28 @@
         <v-col md="3">
             <v-card class="Card forcastCard" >
                 <v-card-title class="cardTitle">Luchtvochtigheid</v-card-title>
-                <v-img alt="icon" :aspect-ratio="16/9" contain max-width="700" v-bind:src="'humidity.svg'"></v-img>
+                <v-img alt="icon" :aspect-ratio="16/9" contain max-width="200" class="img"  v-bind:src="'humidity.svg'"></v-img>
                 <v-card-text class="cardText">{{this.weatherInfo.main.humidity}}% </v-card-text>
             </v-card>
         </v-col>
         <v-col md="3">
             <v-card class="Card forcastCard" >
                 <v-card-title class="cardTitle">Bewolking</v-card-title>
-                <v-img alt="icon" :aspect-ratio="16/9" contain max-width="700" v-bind:src="'clouds.svg'"></v-img>
+                <v-img alt="icon" :aspect-ratio="16/9" contain max-width="200" class="img" v-bind:src="'clouds.svg'"></v-img>
                 <v-card-text class="cardText">{{this.weatherInfo.clouds.all}}%</v-card-text>
             </v-card>
         </v-col>
         <v-col md="3">
             <v-card class="Card forcastCard" >
                 <v-card-title class="cardTitle">Windkracht/snelheid</v-card-title>
-                <v-img alt="icon" :aspect-ratio="16/9" contain max-width="700" v-bind:src="'wind.svg'"></v-img>
+                <v-img alt="icon" :aspect-ratio="16/9" contain max-width="200" class="img" v-bind:src="'wind.svg'"></v-img>
                 <v-card-text class="cardText">{{Math.round(this.weatherInfo.wind.speed)}} Km/h</v-card-text>
             </v-card>
         </v-col>
         <v-col md="3">
             <v-card class="Card forcastCard" >
                 <v-card-title class="cardTitle">Luchdruk</v-card-title>
-                <v-img alt="icon" :aspect-ratio="16/9" contain max-width="700" v-bind:src="'pressure.svg'"></v-img>
+                <v-img alt="icon" :aspect-ratio="16/9" contain max-width="200" class="img" v-bind:src="'pressure.svg'"></v-img>
                 <v-card-text class="cardText">{{this.weatherInfo.main.pressure}}hPa</v-card-text>
             </v-card>
         </v-col>
@@ -42,9 +42,6 @@ export default {
     return {
     };
   },
-  mounted(){
-    console.log("Wordt mee gestuurd",this.weatherInfo)
-  }
 };
 </script>
 <style scoped>
@@ -67,5 +64,9 @@ export default {
   }
   .cardText{
     font-size:large;
+  }
+    .img{
+  left: 50%;
+  transform: translate( -50%);
   }
 </style>

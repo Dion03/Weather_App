@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0 white-text" fluid style="padding: 0 !important;">
+  <v-container class="pa-0 white-text" fluid style="padding: 0 !important; ">
        <v-row no-gutters height="100%" >
           <v-col cols="4" sm="12" md="3">
             <!-- Search bar -->
@@ -10,7 +10,7 @@
                   style="background-color : #222A39; border-radius: 1em !important;"
                   prepend-icon="mdi-magnify"
                   v-model="city"
-                  v-on:key.enter="getWeather">
+                  v-on:keyup.enter="getWeather">
                 </v-text-field>
               </v-card-title>
               <!--  Temp -->
@@ -25,7 +25,7 @@
                 <v-divider color="#3A435F"></v-divider>
                 <v-card-actions>
                   <v-card-text  class="cardText" >
-                    <p class="mt-16"><v-icon >mdi-map-marker</v-icon>{{this.city}}, {{this.weather.sys.country}}: Woensdag 23:59</p>
+                  <p class="mt-16"><v-icon >mdi-map-marker</v-icon>{{this.city}} {{this.weather.sys.country}},  {{this.time}}</p>
                   </v-card-text>
                 </v-card-actions>
               </v-card>      
@@ -33,10 +33,10 @@
           </v-col>
           <!-- 2nd col -->
           <v-col cols="12" sm="12" md="9">
-            <v-container  style="background-color: #222B3A;height: 100vh" >
-                <TodaysForcast :city="this.city"></TodaysForcast>
+            <v-container  style="background-color: #222B3A;height: 100vh; overflow-y: scroll;" >
+                <TodaysForcast :todaysForcast="this.todaysForcast"></TodaysForcast>
                 <WeatherHighlights :weatherInfo="this.weather"></WeatherHighlights>
-
+                <WeekForcast :weekForcast="this.forcastWeather"></WeekForcast>
 
 
             </v-container>
@@ -47,10 +47,12 @@
 <script>
 import WeatherHighlights from "./WeatherHighlights"
 import TodaysForcast from "./TodaysForcast"
+import WeekForcast from "./WeekForcast"
 
+import moment from 'moment'
 import axios from "axios";
   export default {
-    components:{WeatherHighlights, TodaysForcast},
+    components:{WeatherHighlights, TodaysForcast, WeekForcast},
     name: 'WeatherApp',
     data: () => ({
       weather: '',
@@ -58,32 +60,51 @@ import axios from "axios";
       feels_like: '',
       weatherIcon: '',
       city: 'Zwolle',
-     
-      items: [
 
-      ]
+
+      forcastWeather: [],
+      todaysForcast: [],
+      time: '',
     }),
     methods:{
       getWeather() {
         axios.get('https://api.openweathermap.org/data/2.5/weather?q='+ this.city +'&units=metric&APPID=1482f10b395eba6d7f743494cbc50429').then(response => {
           this.weather = response.data;
-          
-          console.log("Data:",response.data)
           this.temp = Math.round(response.data.main.temp) + "°C";
           this.feels_like = Math.round(response.data.main.feels_like);
           this.weatherIcon = response.data.weather[0].icon;
-
-          this.items.push(this.weather.clouds.all, this.weather.main.humidity ,this.weather.main.pressure ,Math.round(this.weather.wind.speed))
-
-                    console.log(this.items)
-
+        })
+        .finally(() => {
+          this.todaysForcast = [],
+          this.getWeatherForcast()
         })
       },
+        getWeatherForcast() {
+        axios.get('https://api.openweathermap.org/data/2.5/forecast?q='+ this.city +'&units=metric&APPID=1482f10b395eba6d7f743494cbc50429').then(response => {
+          this.forcastWeather.push( );
+          var weatherArray = Object.values(response.data.list);
+          weatherArray.forEach(element => {
+            if(moment().format('YYYY-MM-DD') == moment(element.dt_txt).format('YYYY-MM-DD')){
+              this.todaysForcast.push(element);
+            }
+          });
+        })
+      },
+      getTime(){
+      this.time = moment().format("dddd HH:mm");
+
+
+      }
+      
 
     },
     mounted(){
       this.getWeather()
-    }
+    },
+  created() {
+    this.time = moment().format("dddd, HH:mm");
+    setInterval(() => this.getTime(), 1 * 1000);
+  }
   }
 </script>
 <style scoped>
@@ -91,6 +112,10 @@ import axios from "axios";
     font-family: "Roboto" !important; 
     color: white !important;
     margin: 0 !important;
+  }
+  html{
+        overflow: hidden !important;
+
   }
   .Card{
     justify-content: center !important;
