@@ -67,8 +67,15 @@ import axios from "axios";
       time: '',
     }),
     methods:{
+            
+      getGeoLocation(){
+ if (navigator.geolocation) {
+    console.log(navigator.geolocation.getCurrentPosition(this.getWeather))
+  } 
+      },
       getWeather() {
-        axios.get('https://api.openweathermap.org/data/2.5/weather?q='+ this.city +'&units=metric&APPID=1482f10b395eba6d7f743494cbc50429').then(response => {
+        axios.get('https://api.openweathermap.org/data/2.5/weather?q='+ this.city +'&units=metric&lang=nl&APPID=1482f10b395eba6d7f743494cbc50429').then(response => {
+          // console.log(response.data)
           this.weather = response.data;
           this.temp = Math.round(response.data.main.temp) + "°C";
           this.feels_like = Math.round(response.data.main.feels_like);
@@ -76,28 +83,25 @@ import axios from "axios";
         })
         .finally(() => {
           this.todaysForcast = [],
-          this.getWeatherForcast()
+          this.getWeeklyForcast(this.weather.coord)
         })
       },
-        getWeatherForcast() {
-        axios.get('https://api.openweathermap.org/data/2.5/forecast?q='+ this.city +'&units=metric&APPID=1482f10b395eba6d7f743494cbc50429').then(response => {
-          this.forcastWeather.push( );
-          var weatherArray = Object.values(response.data.list);
+      getWeeklyForcast(coords){
+        // console.log("Dit coords",coords.lat)
+        axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=' + coords.lat + '&lon=' + coords.lon + '&exclude=minutely&units=metric&lang=nl&appid=1482f10b395eba6d7f743494cbc50429').then(response => {
+          var weatherArray = Object.values(response.data.hourly);
           weatherArray.forEach(element => {
-            if(moment().format('YYYY-MM-DD') == moment(element.dt_txt).format('YYYY-MM-DD')){
+            if(moment().format('YYYY-MM-DD') == moment.unix(element.dt).format('YYYY-MM-DD')){
               this.todaysForcast.push(element);
             }
-          });
+          })
         })
       },
       getTime(){
-      this.time = moment().format("dddd HH:mm");
-
-
-      }
-      
-
+        this.time = moment().format("dddd HH:mm");
+      },
     },
+
     mounted(){
       this.getWeather()
     },
