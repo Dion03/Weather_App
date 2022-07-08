@@ -30,17 +30,14 @@ export default {
         options: {
           pagination: false,
           currentPage: 0,
-          // infinite: 4,
           slidesToScroll: 4,
           loop: false
         },
         dayTime: [],
-
     };
   },
   created(){
     this.dayTime.push(this.weatherForcastTime)  
-    console.log(this.dayTime)
   }
 };
 </script>

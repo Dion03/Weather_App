@@ -37,8 +37,6 @@
                 <TodaysForcast :todaysForcast="this.todaysForcast" :weatherForcastTime="this.weatherForcastTime"></TodaysForcast>
                 <WeatherHighlights :weatherInfo="this.weather"></WeatherHighlights>
                 <WeekForcast :weekForcast="this.forcastWeather" :weeklyWeatherForcastTime="this.weeklyWeatherForcastTime"></WeekForcast>
-
-
             </v-container>
           </v-col>
         </v-row>
@@ -68,16 +66,14 @@ import axios from "axios";
 weeklyWeatherForcastTime: [],
       time: '',
     }),
-    methods:{
-            
+    methods:{      
       getGeoLocation(){
- if (navigator.geolocation) {
-    console.log(navigator.geolocation.getCurrentPosition(this.getWeather))
-  } 
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(this.getWeather)
+        } 
       },
       getWeather() {
-        axios.get('https://api.openweathermap.org/data/2.5/weather?q='+ this.city +'&units=metric&lang=nl&APPID=1482f10b395eba6d7f743494cbc50429').then(response => {
-          // console.log(response.data)
+        axios.get('https://api.openweathermap.org/data/2.5/weather?q='+ this.city +'&units=metric&lang=nl&APPID='+process.env.VUE_APP_API_KEY).then(response => {
           this.weather = response.data;
           this.temp = Math.round(response.data.main.temp) + "°C";
           this.feels_like = Math.round(response.data.main.feels_like);
@@ -90,46 +86,30 @@ weeklyWeatherForcastTime: [],
         })
       },
       getWeeklyForcast(coords){
-        // console.log("Dit coords",coords.lat)
-        axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=' + coords.lat + '&lon=' + coords.lon + '&exclude=minutely&units=metric&lang=nl&appid=1482f10b395eba6d7f743494cbc50429').then(response => {
+        axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=' + coords.lat + '&lon=' + coords.lon + '&exclude=minutely&units=metric&lang=nl&appid='+process.env.VUE_APP_API_KEY).then(response => {
           var weatherHourlyArray = Object.values(response.data.hourly);
           weatherHourlyArray.forEach(element => {
             this.todaysForcast.push(element);
             this.weatherForcastTime.push(moment.unix(element.dt).format('dddd, HH:mm'))
           })
-
-
-
           var weatherDailyArray = Object.values(response.data.daily);
           weatherDailyArray.forEach(element => {
             this.forcastWeather.push(element);
-                        this.weeklyWeatherForcastTime.push(moment.unix(element.dt).format('dddd'))
-
+            this.weeklyWeatherForcastTime.push(moment.unix(element.dt).format('dddd'))
           })
-            console.log("dagelijkse dingen",this.weeklyWeatherForcastTime)
-
-
-
-
-
-
-
-
         })
-        
       },
       getTime(){
         this.time = moment().format("dddd HH:mm");
       },
     },
-
     mounted(){
       this.getWeather()
     },
-  created() {
-    this.time = moment().format("ddd, HH:mm");
-    setInterval(() => this.getTime(), 1 * 1000);
-  }
+    created() {
+      this.time = moment().format("ddd, HH:mm");
+      setInterval(() => this.getTime(), 1 * 1000);
+    }
   }
 </script>
 <style scoped src="@/assets/css/style.css"></style>

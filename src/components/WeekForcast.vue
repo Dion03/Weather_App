@@ -9,14 +9,12 @@
                 <v-card-text class="cardTitle">
                     <span class="dailyTempText">{{Math.round(item.temp.max)}}°C</span> 
                     <span class="dailyTempSubText">{{Math.round(item.temp.min)}}°C</span>
-                                      <p><b style="font-size: 20px; color: #7E7F7E !important;">{{item.weather[0].description}}</b></p>
-
+                    <p><b style="font-size: 20px; color: #7E7F7E !important;">{{item.weather[0].description}}</b></p>
                 </v-card-text>
             </v-card>
         </v-col>
     </v-row>
 </v-container>
-   
 </template>
 <script>
 export default {
@@ -29,7 +27,6 @@ export default {
   },
   created(){
     this.dayTime.push(this.weeklyWeatherForcastTime )  
-    console.log(this.dayTime)
   }
 };
 </script>

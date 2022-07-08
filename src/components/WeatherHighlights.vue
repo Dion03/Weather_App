@@ -32,7 +32,6 @@
         </v-col>
     </v-row>
 </v-container>
-   
 </template>
 <script>
 export default {
@@ -42,7 +41,6 @@ export default {
     return {
     };
   },
-  
 };
 </script>
 <style scoped src="@/assets/css/style.css"></style>
