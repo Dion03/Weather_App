@@ -2,7 +2,7 @@
     <v-container>
         <h1>Vandaag</h1>
           <slider ref="slider" :options="options" style="margin-top: 1em !important">
-            <slideritem v-for="(item,index ) in todaysForcast" :key="item.id" style="width:23.5%; margin-right: 2% !important;">
+            <slideritem class="test2" v-for="(item,index ) in todaysForcast" :key="item.id" style="width:23.5%; margin-right: 2% !important;">
               <v-card class="Card forcastCard" >
                 <v-card-title class="cardTitle" v-for="(time) in dayTime" :key="time.id">{{time[index]}}</v-card-title>
                 <v-img alt="icon" :aspect-ratio="16/9" contain width="250px" class="img" v-bind:src="'../icons/'+item.weather[0].icon+'.svg'"></v-img>

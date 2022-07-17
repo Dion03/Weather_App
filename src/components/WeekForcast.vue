@@ -2,9 +2,9 @@
 <v-container>
   <h1>Weer rest van de week</h1>
     <v-row >
-        <v-col md="3" v-for="(item, index) in weekForcast" :key="item.id">
-            <v-card class="Card forcastCard" >
-                <v-card-title class="cardTitle"  v-for="(time) in dayTime" :key="time.id">{{time[index]}}</v-card-title>
+        <v-col md="3" cols="6" v-for="(item, index) in weekForcast" :key="item.id">
+            <v-card height="100%" class="Card forcastCard" >
+                <v-card-title class="cardTitle test3"  v-for="(time) in dayTime" :key="time.id">{{time[index]}}</v-card-title>
                 <v-img alt="icon" :aspect-ratio="16/9" contain width="250px" class="img" v-bind:src="'../icons/'+item.weather[0].icon+'.svg'"></v-img>
                 <v-card-text class="cardTitle">
                     <span class="dailyTempText">{{Math.round(item.temp.max)}}°C</span> 

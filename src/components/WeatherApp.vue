@@ -1,7 +1,7 @@
 <template>
   <v-container class="pa-0 white-text" fluid style="padding: 0 !important; ">
        <v-row no-gutters height="100%" >
-          <v-col cols="4" sm="12" md="3">
+          <v-col cols="12" sm="12" md="3">
             <!-- Search bar -->
             <v-card color="#18212D" style="border-radius: 0px !important; height: 100vh;" >
               <v-card-title>           
