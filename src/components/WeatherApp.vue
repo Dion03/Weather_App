@@ -1,25 +1,30 @@
 <template>
-  <v-container class="pa-0 white-text" fluid style="padding: 0 !important; ">
+  <v-container class="pa-0 white-text" fluid style="padding: 0; ">
        <v-row no-gutters height="100%" >
           <v-col cols="12" sm="12" md="3">
             <!-- Search bar -->
-            <v-card color="#18212D" style="border-radius: 0px !important; height: 100vh;" >
+            <v-card color="#18212D" class="mainLeftCard">
               <v-card-title>           
                 <v-text-field
                   dark
-                  style="background-color : #222A39; border-radius: 1em !important;"
+                  class="searchBar"
                   prepend-icon="mdi-magnify"
                   v-model="city"
                   v-on:keyup.enter="getWeather">
                 </v-text-field>
               </v-card-title>
+              <v-progress-circular
+                indeterminate
+                v-if="loading"
+                :size="250">
+              </v-progress-circular>
               <!--  Temp -->
-              <v-card class="Card ">
+              <v-card class="Card" v-if="!loading">
                 <v-img alt="icon" :aspect-ratio="16/9" contain max-width="700" v-bind:src="'../icons/'+this.weatherIcon+'.svg'"></v-img>
-                <v-card-title class="mt-10 cardTitle" style="font-size: 64px !important; margin-bottom: -1rem;">
+                <v-card-title class="mt-10 cardTitle" style="font-size: 64px;">
                   {{this.temp}}
                 </v-card-title><br/>
-                <v-card-text style="margin-left: 1rem;" class="cardText">
+                <v-card-text class="cardText">
                   Voelt aan als {{this.feels_like}} °C <br/><br/> {{this.weather.weather[0].description}}           
                 </v-card-text>              
                 <v-divider color="#3A435F"></v-divider>
@@ -33,10 +38,16 @@
           </v-col>
           <!-- 2nd col -->
           <v-col cols="12" sm="12" md="9">
-            <v-container  style="background-color: #222B3A;height: 100vh; overflow-y: scroll;" >
-                <TodaysForcast :todaysForcast="this.todaysForcast" :weatherForcastTime="this.weatherForcastTime"></TodaysForcast>
-                <WeatherHighlights :weatherInfo="this.weather"></WeatherHighlights>
-                <WeekForcast :weekForcast="this.forcastWeather" :weeklyWeatherForcastTime="this.weeklyWeatherForcastTime"></WeekForcast>
+            <v-container :class="loading ? 'loadingStyle' : 'normalStyle'" >
+              <v-progress-circular
+                class="mx-auto"
+                indeterminate
+                v-if="loading"
+                :size="250">
+              </v-progress-circular>
+                <TodaysForcast v-if="!loading" :todaysForcast="this.todaysForcast" :weatherForcastTime="this.weatherForcastTime"></TodaysForcast>
+                <WeatherHighlights v-if="!loading" :weatherInfo="this.weather"></WeatherHighlights>
+                <WeekForcast v-if="!loading" :weekForcast="this.forcastWeather" :weeklyWeatherForcastTime="this.weeklyWeatherForcastTime"></WeekForcast>
             </v-container>
           </v-col>
         </v-row>
@@ -58,13 +69,12 @@ import axios from "axios";
       feels_like: '',
       weatherIcon: '',
       city: 'Zwolle',
-
-
       forcastWeather: [],
       todaysForcast: [],
-            weatherForcastTime: [],
-weeklyWeatherForcastTime: [],
+      weatherForcastTime: [],
+      weeklyWeatherForcastTime: [],
       time: '',
+      loading: true
     }),
     methods:{      
       getGeoLocation(){
@@ -73,6 +83,7 @@ weeklyWeatherForcastTime: [],
         } 
       },
       getWeather() {
+        setInterval(() => {}, 5000);
         axios.get('https://api.openweathermap.org/data/2.5/weather?q='+ this.city +'&units=metric&lang=nl&APPID='+process.env.VUE_APP_API_KEY).then(response => {
           this.weather = response.data;
           this.temp = Math.round(response.data.main.temp) + "°C";
@@ -97,6 +108,7 @@ weeklyWeatherForcastTime: [],
             this.forcastWeather.push(element);
             this.weeklyWeatherForcastTime.push(moment.unix(element.dt).format('dddd'))
           })
+          this.loading = false
         })
       },
       getTime(){

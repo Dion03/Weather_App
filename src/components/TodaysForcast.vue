@@ -1,14 +1,14 @@
 <template>
     <v-container>
         <h1 class="sectionTitle">Vandaag</h1>
-          <slider ref="slider" class="slider" :options="options" style="margin-top: 1em !important">
-            <slideritem class="sliderCard" v-for="(item,index ) in todaysForcast" :key="item.id" style="width:23.5%; margin-right: 2% !important;">
+          <slider ref="slider" class="slider" :options="options" style="margin-top: 1em;">
+            <slideritem class="sliderCard" v-for="(item,index ) in todaysForcast" :key="item.id">
               <v-card class="Card forcastCard" >
                 <v-card-title class="cardTitle forcastTitle" v-for="(time) in dayTime" :key="time.id">{{time[index]}}</v-card-title>
                 <v-img alt="icon" :aspect-ratio="16/9" contain width="250px" class="img" v-bind:src="'../icons/'+item.weather[0].icon+'.svg'"></v-img>
                 <v-card-text >
-                  <p><b style="font-size: 28px; margin-right: 1em !important">{{Math.round(item.temp)}}°C</b></p>
-                  <p><b style="font-size: 20px; color: #7E7F7E !important; margin-right: 1.5em !important">{{item.weather[0].description}}</b></p>
+                  <p class="TodforcastTemp">{{Math.round(item.temp)}}°C</p>
+                  <p class="TodforcastDesc">{{item.weather[0].description}}</p>
                 </v-card-text>
               </v-card>
             </slideritem>

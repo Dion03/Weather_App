@@ -3,55 +3,106 @@
     color: white !important;
     margin: 0 !important;
   }
+
+  /* Card css */
   .Card{
-    justify-content: center !important;
-    text-align: center !important;
-    background-color: #18212D !important;
-    border-radius: 2em !important;
+    justify-content: center;
+    text-align: center;
+    background-color: #18212D;
+    border-radius: 2em;
   }
-  .leftCard{
-    border-radius: 0px !important 
+  .mainLeftCard{
+    border-radius: 0px; 
+    height: 100vh; 
+    text-align: center;
   }
   .cardTitle{
-    justify-content: center !important;
+    justify-content: center;
   }
-  .cardText{
-    font-size:large;
+  .sliderCard{
+    width:23.5%; 
+    margin-right: 1% !important;
   }
-  .img{
-    left: 50%;
-    transform: translate( -50%);
-  }
-  .mainText{
+  /* // */
+
+
+  /* Text css */
+  .highlightMainText{
     font-size: 1.6em;
   }
-  .subText{
+  .highlightSubText{
     color: #7E7F7E !important; 
     font-size: 1.3em;
   }
   .dailyTempText{
     font-size: 1.3em;
-
   }
   .dailyTempSubText{
     color: #7E7F7E !important; 
     font-size: 1.3em;
     margin-left: 1rem !important;
   }
+  .cardText{
+    font-size:large;
+  }
+  .TodforcastTemp{
+    font-size: 28px; 
+    margin-right: 1em !important
+  }
+  .TodforcastDesc{
+    font-size: 20px; 
+    color: #7E7F7E !important; 
+    margin-right: 1.5em !important;
+    font-weight: bold;
+    margin-top: 0.5em !important;
+  }
+  .WeekforcastDesc{
+    font-size: 20px; 
+    color: #7E7F7E !important; 
+    font-weight: bold;
+  }
+  /* // */
 
+  /* General */
+  .img{
+    left: 50%;
+    transform: translate( -50%);
+  }
+  .searchBar{
+    background-color : #222A39; 
+    border-radius: 1em;
+  }
+  .loadingStyle{
+    background-color: #222B3A;
+    height: 100vh; 
+    overflow-y: scroll;
+    text-align: center;
+  }
+  .normalStyle{
+    background-color: #222B3A;
+    height: 100vh; 
+    overflow-y: scroll;
+  }
+  .slider{
+    margin-top: 0.5em !important;
+  }
+  /* // */
+
+
+  /* Media query */
   @media only screen and (max-width: 600px) {
     .sliderCard{
       width: 50% !important;
+      width:23.5%; 
+      margin-right: 1% !important;
+
     }
     .forcastCard{
-      justify-content: center !important;
-      text-align: center !important;
-      background-color: #18212D !important;
-      border-radius: 1em !important;
+      justify-content: center;
+      text-align: center;
+      background-color: #18212D;
+      border-radius: 1em;
       min-width: 100%;
-    }
-    .forcastTitle{
-      word-spacing: 10px !important; 
     }
     .sectionTitle{
       text-align: center;
