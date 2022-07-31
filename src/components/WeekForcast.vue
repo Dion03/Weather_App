@@ -1,6 +1,6 @@
 <template>
 <v-container>
-  <h1>Weer rest van de week</h1>
+  <h1 class="sectionTitle">Weer in het verloop van de week</h1>
     <v-row >
         <v-col md="3" cols="6" v-for="(item, index) in weekForcast" :key="item.id">
             <v-card height="100%" class="Card forcastCard" >
@@ -30,4 +30,5 @@ export default {
   }
 };
 </script>
+
 <style scoped src="@/assets/css/style.css"></style>

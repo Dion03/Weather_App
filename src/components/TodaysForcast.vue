@@ -1,10 +1,10 @@
 <template>
     <v-container>
-        <h1>Vandaag</h1>
-          <slider ref="slider" :options="options" style="margin-top: 1em !important">
-            <slideritem class="test2" v-for="(item,index ) in todaysForcast" :key="item.id" style="width:23.5%; margin-right: 2% !important;">
+        <h1 class="sectionTitle">Vandaag</h1>
+          <slider ref="slider" class="slider" :options="options" style="margin-top: 1em !important">
+            <slideritem class="sliderCard" v-for="(item,index ) in todaysForcast" :key="item.id" style="width:23.5%; margin-right: 2% !important;">
               <v-card class="Card forcastCard" >
-                <v-card-title class="cardTitle" v-for="(time) in dayTime" :key="time.id">{{time[index]}}</v-card-title>
+                <v-card-title class="cardTitle forcastTitle" v-for="(time) in dayTime" :key="time.id">{{time[index]}}</v-card-title>
                 <v-img alt="icon" :aspect-ratio="16/9" contain width="250px" class="img" v-bind:src="'../icons/'+item.weather[0].icon+'.svg'"></v-img>
                 <v-card-text >
                   <p><b style="font-size: 28px; margin-right: 1em !important">{{Math.round(item.temp)}}°C</b></p>
@@ -28,10 +28,10 @@ export default {
   data() {
     return {
         options: {
-          pagination: false,
+          pagination: true,
           currentPage: 0,
           slidesToScroll: 4,
-          loop: false
+          loop: false,
         },
         dayTime: [],
     };
@@ -41,5 +41,10 @@ export default {
   }
 };
 </script>
+<style>
+  .slider-pagination{
+    position: unset !important;
+  }
+</style>
 <style scoped src="@/assets/css/style.css"></style>
 

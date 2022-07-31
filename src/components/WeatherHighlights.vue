@@ -1,6 +1,6 @@
 <template>
 <v-container>
-  <h1>Weer dingetjes van vandaag</h1>
+  <h1 class="sectionTitle">Weer statestieken</h1>
    <v-row>
         <v-col md="3" cols="6">
             <v-card height="100%" class="Card" >
