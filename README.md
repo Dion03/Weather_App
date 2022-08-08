@@ -1,5 +1,5 @@
 # weatherapp
-
+<a href="https://dmweather.netlify.app/">View Demo</a>
 ## Project setup
 ```
 npm install
@@ -20,5 +20,9 @@ npm run build
 npm run lint
 ```
 
+### Enter your API in `.env` ###
+   ```env
+   VUE_APP_API_KEY =  YOUR API KEY;
+   ```
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
